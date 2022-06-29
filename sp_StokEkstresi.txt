@@ -1,0 +1,18 @@
+USE [12MProje]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_stokEkstresi]    Script Date: 29.06.2022 10:34:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[sp_stokEkstresi]
+@BaslagicTarih int,
+@BitisTarih int,
+@MalAdi nvarchar(50),
+@MalKod nvarchar(50)=null
+as
+--gelen mal adını stk tablousundan malkudu değerini alıyoruz
+set @MalKod=(select MalKodu from STK where MalAdi=@MalAdi)
+--gelen parametrelere göre sti taplosunu listeleyip geri döndürüyoruz
+select ID,0 SiraNo,CONVERT(nvarchar(25),IslemTur) IslemTur,EvrakNo,CONVERT(VARCHAR(15), CAST(STI.Tarih - 2 AS datetime), 104) as Tarih,Miktar,0 GirisMiktar,0 CikisMiktar,0 StokMiktar from dbo.STI where Tarih<@BitisTarih and Tarih>@BaslagicTarih and MalKodu=@MalKod order by Tarih
+

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Stok Page";
+}
+<div class="container" style="margin-left:65px">
+<div>
+    <span style="margin-left:5px;">Basşlangıç Tarih</span> <span style="margin-left:80px;">Bitiş Tarih</span>  <span style="margin-left:200px;">Mal Kodu</span>
+</div>
+<form id="dataForm">
+    <div>
+        <input type="date" name=basTarih /> <input style="margin-left:40px;" name="bitTarih" type="date" onchange="stokEktresiGetir()" />
+        <select style="margin-left:40px;" name="malAdi" onchange="stokEktresiGetir()">
+            <option>Mal Adı Seçiniz.</option>
+            @foreach (var item in ViewBag.STK)
+            {
+                <option>
+                    @item.MalAdi
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+<div class="demo-container">
+    <div id="gridContainer"></div>
+</div>
+</div>
+
+
+@section Script{
+    <script src="/js/stokEktre.js"></script>
+}
